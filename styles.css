@@ -1,0 +1,240 @@
+/* ============================================================
+   Fleet Checkpoint — styles.css
+   ============================================================ */
+
+/* --- CSS variables (light mode) --- */
+:root {
+  --concrete: #eceee9;
+  --steel:    #2b3340;
+  --steel-2:  #3c4656;
+  --amber:    #d98a1f;
+  --amber-2:  #b8721a;
+  --ok:       #3f7a4e;
+  --bad:      #b23b3b;
+  --ink:      #1c2128;
+  --ink-soft: #5b6472;
+  --card:     #ffffff;
+  --line:     #d7dad3;
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top:    env(safe-area-inset-top,    0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* --- Dark mode --- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --concrete: #14171c; --steel: #1b2129; --steel-2: #232b35;
+    --amber: #e3a23f; --amber-2: #c6872a; --ok: #5fa473; --bad: #d9655f;
+    --ink: #e7e9ec; --ink-soft: #9aa3b0; --card: #1d222a; --line: #303945;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --concrete: #14171c; --steel: #1b2129; --steel-2: #232b35;
+  --amber: #e3a23f; --amber-2: #c6872a; --ok: #5fa473; --bad: #d9655f;
+  --ink: #e7e9ec; --ink-soft: #9aa3b0; --card: #1d222a; --line: #303945;
+  color-scheme: dark;
+}
+
+/* --- Reset & base --- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--concrete); color: var(--ink); min-height: 100%;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--steel);
+}
+
+/* --- Header --- */
+header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--steel); color: #fff; padding: 14px 18px;
+  border-bottom: 4px solid var(--amber);
+}
+header h1 { margin: 0; font-size: 19px; font-weight: 800; }
+header p  { margin: 2px 0 0; font-size: 12.5px; color: #b7c0cc; }
+
+/* --- Navigation tabs --- */
+nav { display: flex; background: var(--steel-2); overflow-x: auto; }
+nav button {
+  flex: 1; min-width: 100px; padding: 11px 8px;
+  background: none; border: none; color: #c7cedb;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  border-bottom: 3px solid transparent;
+}
+nav button.active {
+  color: #fff; border-bottom-color: var(--amber);
+  background: rgba(255,255,255,.05);
+}
+
+/* --- Layout --- */
+main { max-width: 760px; margin: 0 auto; padding: 16px; padding-bottom: 60px; }
+
+/* --- Loading & setup states --- */
+.loading {
+  text-align: center; padding: 60px 20px;
+  color: var(--ink-soft); font-size: 14px;
+}
+.setup-card { border: 2px dashed var(--amber) !important; }
+.setup-card code {
+  display: block; background: var(--concrete); border: 1px solid var(--line);
+  border-radius: 7px; padding: 12px; font-size: 12px; font-family: monospace;
+  white-space: pre-wrap; word-break: break-all; margin: 8px 0; color: var(--ink);
+}
+.step {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 10px 0; border-bottom: 1px solid var(--line);
+}
+.step:last-child { border-bottom: none; }
+.step-num {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--amber); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800; flex-shrink: 0;
+}
+.step-body { flex: 1; font-size: 13.5px; line-height: 1.5; }
+.step-body a { color: var(--amber); }
+
+/* --- Card --- */
+.card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 10px; padding: 16px; margin-bottom: 14px;
+}
+.card h2 { margin: 0 0 4px; font-size: 15px; font-weight: 800; }
+
+/* --- Typography --- */
+.muted { color: var(--ink-soft); font-size: 12.5px; }
+
+/* --- Form elements --- */
+label {
+  display: block; font-size: 12.5px; font-weight: 700;
+  color: var(--ink-soft); margin: 12px 0 5px;
+}
+select, input[type="text"], input[type="file"], textarea {
+  width: 100%; padding: 9px 10px; border: 1px solid var(--line);
+  border-radius: 7px; background: var(--concrete); color: var(--ink);
+  font-size: 14px; font-family: inherit;
+}
+textarea { min-height: 52px; resize: vertical; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+/* --- Auto-filled read-only row --- */
+.auto {
+  display: flex; justify-content: space-between; gap: 10px; font-size: 13px;
+  padding: 8px 10px; background: var(--concrete); border-radius: 7px;
+  border: 1px dashed var(--line); margin-top: 4px;
+}
+.auto span:first-child { color: var(--ink-soft); }
+
+/* --- Checklist item --- */
+.item { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-top: 8px; }
+.item-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.item-top strong { font-size: 13.5px; }
+.item .detail { margin-top: 8px; display: none; }
+.item.flagged .detail { display: block; }
+.item.flagged { border-color: var(--bad); }
+
+/* --- OK / Defect segmented control --- */
+.seg { display: flex; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }
+.seg button {
+  border: none; padding: 6px 12px; font-size: 12.5px; font-weight: 700;
+  background: var(--card); color: var(--ink-soft); cursor: pointer;
+}
+.seg button.on.ok  { background: var(--ok);  color: #fff; }
+.seg button.on.bad { background: var(--bad); color: #fff; }
+
+/* --- Buttons --- */
+button.primary {
+  width: 100%; padding: 13px; margin-top: 16px;
+  background: var(--amber); color: #241a06; border: none;
+  border-radius: 8px; font-size: 14.5px; font-weight: 800; cursor: pointer;
+}
+button.primary:active { background: var(--amber-2); }
+button.ghost {
+  padding: 9px 14px; background: none; border: 1px solid var(--line);
+  border-radius: 7px; color: var(--ink); font-weight: 700; font-size: 13px; cursor: pointer;
+}
+
+/* --- Status pills --- */
+.pill { display: inline-block; padding: 2px 9px; border-radius: 99px; font-size: 11.5px; font-weight: 800; }
+.pill.open     { background: rgba(178,59,59,.15);  color: var(--bad); }
+.pill.closed   { background: rgba(63,122,78,.15);  color: var(--ok); }
+.pill.minor    { background: rgba(217,138,31,.15); color: var(--amber-2); }
+.pill.major    { background: rgba(217,138,31,.25); color: var(--amber-2); }
+.pill.critical { background: rgba(178,59,59,.2);   color: var(--bad); }
+
+/* --- Tables --- */
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+th { color: var(--ink-soft); font-size: 11.5px; text-transform: uppercase; letter-spacing: .4px; }
+
+/* --- Empty state --- */
+.empty { text-align: center; padding: 26px 10px; color: var(--ink-soft); font-size: 13.5px; }
+
+/* --- Toast --- */
+.toast {
+  position: fixed; bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  left: 50%; transform: translateX(-50%); background: var(--steel); color: #fff;
+  padding: 10px 18px; border-radius: 8px; font-size: 13.5px;
+  opacity: 0; pointer-events: none; transition: opacity .25s; z-index: 20; white-space: nowrap;
+}
+.toast.show { opacity: 1; }
+
+/* --- Add-row layout --- */
+.addrow { display: flex; gap: 8px; margin-top: 10px; }
+.addrow input { flex: 1; min-width: 0; }
+
+/* --- Filter bar --- */
+.filterbar { display: flex; gap: 8px; margin-bottom: 10px; }
+.filterbar button {
+  flex: 1; padding: 7px; border: 1px solid var(--line);
+  background: var(--card); border-radius: 7px; font-size: 12.5px;
+  font-weight: 700; color: var(--ink-soft); cursor: pointer;
+}
+.filterbar button.on { background: var(--steel); color: #fff; border-color: var(--steel); }
+
+/* --- Operator match card --- */
+.opcard {
+  display: flex; align-items: center; gap: 12px; margin-top: 10px;
+  padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--concrete);
+}
+.opcard img { width: 72px; height: 72px; border-radius: 8px; object-fit: cover; border: 1px solid var(--line); }
+.opcard strong { font-size: 15px; }
+.nomatch {
+  margin-top: 10px; padding: 10px; border-radius: 8px;
+  border: 1px solid var(--bad); color: var(--bad); font-size: 13px;
+}
+
+/* --- Thumbnails --- */
+.thumb {
+  width: 40px; height: 40px; border-radius: 6px;
+  object-fit: cover; border: 1px solid var(--line); display: block;
+}
+.thumb.none {
+  background: var(--concrete); display: flex;
+  align-items: center; justify-content: center; color: var(--ink-soft); font-size: 10px;
+}
+.thumb.lg { width: 96px; height: 96px; margin-top: 8px; }
+
+/* --- Photo picker wrapper (transparent input overlay trick) --- */
+.photo-wrap { position: relative; display: block; width: 100%; }
+.photo-wrap input[type="file"] {
+  position: absolute; inset: 0; opacity: 0;
+  width: 100%; height: 100%; cursor: pointer;
+}
+
+/* --- Checker name modal --- */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.55);
+  display: flex; align-items: center; justify-content: center; z-index: 50; padding: 24px;
+}
+.modal {
+  background: var(--card); border-radius: 12px; padding: 24px;
+  width: 100%; max-width: 360px;
+}
+.modal h2 { margin: 0 0 8px; font-size: 17px; }
+.modal p  { margin: 0 0 14px; color: var(--ink-soft); font-size: 13.5px; }
